@@ -1,0 +1,96 @@
+{
+  "entities": {
+    "Author": {
+      "title": "Author",
+      "description": "Represents an author of Russian literary classics.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name of the author" },
+        "displayName": { "type": "string", "description": "Short or common name" },
+        "bio": { "type": "string", "description": "Biography description" },
+        "born": { "type": "number", "description": "Year of birth" },
+        "died": { "type": "number", "description": "Year of death" },
+        "nationality": { "type": "string", "description": "Nationality" },
+        "photoPath": { "type": "string", "description": "Firebase Storage path of the photo" },
+        "photoUrl": { "type": "string", "description": "Download URL of the photo" },
+        "sortOrder": { "type": "number", "description": "Order for listings" },
+        "bookCount": { "type": "number", "description": "Total books written by this author" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["name", "displayName", "born", "died", "sortOrder"]
+    },
+    "Book": {
+      "title": "Book",
+      "description": "Represents a classical book details.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Title of the book" },
+        "authorId": { "type": "string", "description": "Referenced author ID" },
+        "authorName": { "type": "string", "description": "Author's display or full name copy" },
+        "description": { "type": "string", "description": "Overview or synopsis of the book" },
+        "year": { "type": "number", "description": "Year of original publication" },
+        "translator": { "type": "string", "description": "Translator of the work" },
+        "genre": { "type": "string", "description": "Genre of literature" },
+        "readingTime": { "type": "string", "description": "Estimated reading time" },
+        "premium": { "type": "boolean", "description": "Whether book is exclusive/premium" },
+        "coverPath": { "type": "string", "description": "Firebase Storage path of cover image" },
+        "coverUrl": { "type": "string", "description": "Download URL of cover image" },
+        "totalChapters": { "type": "number", "description": "Total chapters count" },
+        "totalPages": { "type": "number", "description": "Total pages count across all chapters" },
+        "status": { "type": "string", "enum": ["draft", "published"], "description": "Release status of the book" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["title", "authorId", "authorName", "description", "status"]
+    },
+    "Chapter": {
+      "title": "Chapter",
+      "description": "Represents a chapter inside a book.",
+      "type": "object",
+      "properties": {
+        "chapterNumber": { "type": "number", "description": "Chapter number" },
+        "title": { "type": "string", "description": "Name or title of chapter" },
+        "totalPages": { "type": "number", "description": "Pages in this chapter" },
+        "pagesStart": { "type": "number", "description": "Global page start index" },
+        "pagesEnd": { "type": "number", "description": "Global page end index" },
+        "sortOrder": { "type": "number", "description": "Sort rendering index" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["chapterNumber", "title", "sortOrder"]
+    },
+    "Page": {
+      "title": "Page",
+      "description": "A single page of text content inside a specific chapter.",
+      "type": "object",
+      "properties": {
+        "pageNumber": { "type": "number", "description": "Page sequence inside the chapter" },
+        "globalPageNumber": { "type": "number", "description": "Page sequence relative to the entire book" },
+        "content": { "type": "string", "description": "Raw markdown or textual contents" },
+        "htmlContent": { "type": "string", "description": "Compiled HTML content for viewer rendering" },
+        "wordCount": { "type": "number", "description": "Word count inside the page text" },
+        "sortOrder": { "type": "number", "description": "Sort index" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["pageNumber", "globalPageNumber", "content", "htmlContent", "sortOrder"]
+    }
+  },
+  "firestore": {
+    "/authors/{authorId}": {
+      "schema": "Author",
+      "description": "Russian classical authors list"
+    },
+    "/books/{bookId}": {
+      "schema": "Book",
+      "description": "Classical literary books"
+    },
+    "/books/{bookId}/chapters/{chapterId}": {
+      "schema": "Chapter",
+      "description": "Chapters belonging to a book"
+    },
+    "/books/{bookId}/chapters/{chapterId}/pages/{pageId}": {
+      "schema": "Page",
+      "description": "Pages belonging to a specific chapter"
+    }
+  }
+}

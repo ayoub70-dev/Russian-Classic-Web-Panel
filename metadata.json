@@ -1,0 +1,6 @@
+{
+  "name": "Russian Classics Admin",
+  "description": "Admin web panel for managing books and authors in the Russian Classics digital library app.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
